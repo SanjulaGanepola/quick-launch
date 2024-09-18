@@ -1,8 +1,7 @@
 import * as path from "path";
-import { Platform, PlatformApplicationManager } from "./types";
+import { Platform, PlatformApplicationManager } from "../types";
 
-
-export class WindowsApplicationManager implements PlatformApplicationManager {
+export class Windows implements PlatformApplicationManager {
     platform: string = Platform.windows;
     extensions: string[] = ["exe", "lnk"];
     searchDirectories: string[] = [];

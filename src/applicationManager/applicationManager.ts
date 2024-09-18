@@ -1,9 +1,9 @@
 import { glob } from "glob";
 import * as path from "path";
-import { LinuxApplicationManager } from "./linuxApplicationManager";
-import { MacApplicationManager } from "./macApplicationManager";
-import { InstalledApplication, Platform, PlatformApplicationManager } from "./types";
-import { WindowsApplicationManager } from "./windowsApplicationManager";
+import { InstalledApplication, Platform, PlatformApplicationManager } from "../types";
+import { Linux } from "./linux";
+import { Mac } from "./mac";
+import { Windows } from "./windows";
 
 export class ApplicationManager {
     static async getInstalledApplications(): Promise<InstalledApplication[] | undefined> {
@@ -11,13 +11,13 @@ export class ApplicationManager {
 
         switch (process.platform) {
             case Platform.windows:
-                applicationManager = new WindowsApplicationManager();
+                applicationManager = new Windows();
                 break;
             case Platform.mac:
-                applicationManager = new MacApplicationManager();
+                applicationManager = new Mac();
                 break;
             case Platform.linux:
-                applicationManager = new LinuxApplicationManager();
+                applicationManager = new Linux();
                 break;
             default:
                 return;
