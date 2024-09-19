@@ -10,34 +10,38 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
 
     constructor(context: ExtensionContext) {
         context.subscriptions.push(
-            commands.registerCommand(`quickLaunch.addApplication`, async () => {
-            }),
-            commands.registerCommand(`quickLaunch.launchApplication`, async (applicationTreeItem?: ApplicationTreeItem) => {
-                if (applicationTreeItem) {
-                    await env.openExternal(Uri.parse(applicationTreeItem.application.path));
-                } else {
-                    const installedApplications = await ApplicationManager.getInstalledApplications();
-                    if (installedApplications) {
-                        const items = installedApplications.map(application => {
-                            return {
-                                iconPath: new ThemeIcon('rocket'),
-                                label: application.name,
-                                application: application
-                            }
-                        });
-
-                        const selected = await window.showQuickPick(items, {
-                            title: 'Select the application to launch',
-                            placeHolder: 'Application'
-                        });
-
-                        if (selected) {
-                            await env.openExternal(Uri.parse(selected.application.path));
+            commands.registerCommand('quickLaunch.launchApplication', async () => {
+                const installedApplications = await ApplicationManager.getInstalledApplications();
+                if (installedApplications) {
+                    const items = installedApplications.map(application => {
+                        return {
+                            iconPath: new ThemeIcon('rocket'),
+                            label: application.name,
+                            application: application
                         }
-                    } else {
-                        window.showErrorMessage('No applications found');
+                    });
+
+                    const selected = await window.showQuickPick(items, {
+                        title: 'Select the application to launch',
+                        placeHolder: 'Application'
+                    });
+
+                    if (selected) {
+                        await env.openExternal(Uri.parse(selected.application.path));
                     }
+                } else {
+                    window.showErrorMessage('No applications found');
                 }
+            }),
+            commands.registerCommand('quickLaunch.addApplication', async () => {
+            }),
+            commands.registerCommand('quickLaunch.searchForApplication', async () => {
+                await commands.executeCommand('quickLaunch.launchApplication');
+            }),
+            commands.registerCommand('quickLaunch.launch', async (applicationTreeItem: ApplicationTreeItem) => {
+                await env.openExternal(Uri.parse(applicationTreeItem.application.path));
+            }),
+            commands.registerCommand('quickLaunch.favorite', async (applicationTreeItem: ApplicationTreeItem) => {
             })
         );
     }

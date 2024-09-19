@@ -14,7 +14,7 @@ export default class ApplicationTreeItem extends TreeItem implements Application
         this.iconPath = new ThemeIcon('rocket');
         this.command = {
             title: 'Launch',
-            command: 'quickLaunch.launchApplication',
+            command: 'quickLaunch.launch',
             arguments: [this]
         }
     }

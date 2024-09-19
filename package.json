@@ -52,31 +52,67 @@
     "commands": [
       {
         "category": "Quick Launch",
+        "command": "quickLaunch.launchApplication",
+        "title": "Launch Application"
+      },
+      {
+        "category": "Quick Launch",
         "command": "quickLaunch.addApplication",
         "title": "Add Application",
         "icon": "$(add)"
       },
       {
         "category": "Quick Launch",
-        "command": "quickLaunch.launchApplication",
-        "title": "Launch Application",
+        "command": "quickLaunch.searchForApplication",
+        "title": "Search For Application",
+        "icon": "$(search)"
+      },
+      {
+        "category": "Quick Launch",
+        "command": "quickLaunch.launch",
+        "title": "Launch",
         "icon": "$(debug-start)"
+      },
+      {
+        "category": "Quick Launch",
+        "command": "quickLaunch.favorite",
+        "title": "Favorite",
+        "icon": "$(star-empty)"
       }
     ],
     "menus": {
-      "commandPalette": [],
+      "commandPalette": [
+        {
+          "command": "quickLaunch.launch",
+          "when": "never"
+        },
+        {
+          "command": "quickLaunch.favorite",
+          "when": "never"
+        }
+      ],
       "view/title": [
         {
           "command": "quickLaunch.addApplication",
           "when": "view == applications",
           "group": "navigation@0"
+        },
+        {
+          "command": "quickLaunch.searchForApplication",
+          "when": "view == applications",
+          "group": "navigation@1"
         }
       ],
       "view/item/context": [
         {
-          "command": "quickLaunch.launchApplication",
+          "command": "quickLaunch.launch",
           "when": "view == applications && viewItem =~ /^application.*/",
           "group": "inline@0"
+        },
+        {
+          "command": "quickLaunch.favorite",
+          "when": "view == applications && viewItem =~ /^application.*/",
+          "group": "inline@1"
         }
       ]
     }
