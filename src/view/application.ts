@@ -8,8 +8,9 @@ export default class ApplicationTreeItem extends TreeItem implements Application
 
     constructor(application: Application) {
         super(application.name, TreeItemCollapsibleState.Collapsed);
-        this.collapsibleState = TreeItemCollapsibleState.None;
         this.application = application;
+        this.collapsibleState = TreeItemCollapsibleState.None;
+        this.tooltip = `Name: ${application.name}\nPath: ${application.path}`;
         this.contextValue = `${ApplicationTreeItem.contextValue}`;
         this.iconPath = new ThemeIcon('rocket');
         this.command = {
