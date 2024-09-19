@@ -89,6 +89,10 @@
     "menus": {
       "commandPalette": [
         {
+          "command": "quickLaunch.searchForApplication",
+          "when": "never"
+        },
+        {
           "command": "quickLaunch.launch",
           "when": "never"
         },
