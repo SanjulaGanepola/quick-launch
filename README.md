@@ -8,7 +8,7 @@
 Quickly launch any installed Windows, MacOS, or Linux application right from VS Code.
 
 * 🚀 **Launch Installed Applications**: Launch any installed application on your machine from VS Code.
-* ⚙️ **Add Custom Applications**: Add individual custom applications that can also be launched.
+* ⚙️ **Add Custom Applications**: Add individual custom applications that are not found in the application directories.
 * 🌟 **Assign Favorites**: Assign favorites to easily find your most commonly used applications.
 * ⌨️ **Assign Keyboard Shortcuts**: Assign keyboard shortcuts to individual applications to quickly launch them.
 * ✏️ **Configure Application Directories**: Configure the directories that will be searched for installed applications.
