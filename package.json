@@ -34,14 +34,14 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "quick-launcher-container",
-          "title": "Quick Launcher",
+          "id": "quick-launch-container",
+          "title": "Quick Launch",
           "icon": "$(rocket)"
         }
       ]
     },
     "views": {
-      "quick-launcher-container": [
+      "quick-launch-container": [
         {
           "id": "applications",
           "name": "Applications",
