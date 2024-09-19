@@ -1,6 +1,6 @@
 {
   "name": "quick-launch",
-  "displayName": "quick-launch",
+  "displayName": "Quick Launch",
   "description": "Quickly launch any installed Windows or MacOS application right from VS Code.",
   "icon": "icon.png",
   "author": {
@@ -78,6 +78,12 @@
         "command": "quickLaunch.favorite",
         "title": "Favorite",
         "icon": "$(star-empty)"
+      },
+      {
+        "category": "Quick Launch",
+        "command": "quickLaunch.assignKeyboardShortcut",
+        "title": "Assign Keyboard Shortcut",
+        "icon": "$(record-keys)"
       }
     ],
     "menus": {
@@ -88,6 +94,10 @@
         },
         {
           "command": "quickLaunch.favorite",
+          "when": "never"
+        },
+        {
+          "command": "quickLaunch.assignKeyboardShortcut",
           "when": "never"
         }
       ],
@@ -113,6 +123,11 @@
           "command": "quickLaunch.favorite",
           "when": "view == applications && viewItem =~ /^application.*/",
           "group": "inline@1"
+        },
+        {
+          "command": "quickLaunch.assignKeyboardShortcut",
+          "when": "view == applications && viewItem =~ /^application.*/",
+          "group": "inline@2"
         }
       ]
     }

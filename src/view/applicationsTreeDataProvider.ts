@@ -34,6 +34,7 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
                 }
             }),
             commands.registerCommand('quickLaunch.addApplication', async () => {
+                // TODO:
             }),
             commands.registerCommand('quickLaunch.searchForApplication', async () => {
                 await commands.executeCommand('quickLaunch.launchApplication');
@@ -42,6 +43,10 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
                 await env.openExternal(Uri.parse(applicationTreeItem.application.path));
             }),
             commands.registerCommand('quickLaunch.favorite', async (applicationTreeItem: ApplicationTreeItem) => {
+                // TODO:
+            }),
+            commands.registerCommand('quickLaunch.assignKeyboardShortcut', async (applicationTreeItem: ApplicationTreeItem) => {
+                // TODO:
             })
         );
     }
