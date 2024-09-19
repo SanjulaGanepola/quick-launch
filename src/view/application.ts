@@ -11,7 +11,6 @@ export default class ApplicationTreeItem extends TreeItem implements Application
         this.application = application;
         this.collapsibleState = TreeItemCollapsibleState.None;
         this.tooltip = `Name: ${application.name}\nPath: ${application.path}`;
-        this.contextValue = `${ApplicationTreeItem.contextValue}`;
         this.command = {
             title: 'Launch',
             command: 'quickLaunch.launch',
@@ -19,9 +18,11 @@ export default class ApplicationTreeItem extends TreeItem implements Application
         }
 
         if(application.favorite) {
+            this.contextValue = `${ApplicationTreeItem.contextValue}_favorite`;
             this.iconPath = new ThemeIcon('rocket', new ThemeColor('QuickLaunch.favoriteApplication'));
             this.resourceUri = Uri.parse(`${ApplicationTreeItem.contextValue}:favorite`, true);
         } else {
+            this.contextValue = `${ApplicationTreeItem.contextValue}_unfavorite`;
             this.iconPath = new ThemeIcon('rocket');
         }
     }

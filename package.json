@@ -93,6 +93,12 @@
       },
       {
         "category": "Quick Launch",
+        "command": "quickLaunch.unfavorite",
+        "title": "Unfavorite",
+        "icon": "$(star-full)"
+      },
+      {
+        "category": "Quick Launch",
         "command": "quickLaunch.assignKeyboardShortcut",
         "title": "Assign Keyboard Shortcut",
         "icon": "$(record-keys)"
@@ -118,6 +124,10 @@
         },
         {
           "command": "quickLaunch.favorite",
+          "when": "never"
+        },
+        {
+          "command": "quickLaunch.unfavorite",
           "when": "never"
         },
         {
@@ -155,7 +165,12 @@
         },
         {
           "command": "quickLaunch.favorite",
-          "when": "view == applications && viewItem =~ /^application.*/",
+          "when": "view == applications && viewItem =~ /^application_unfavorite.*/",
+          "group": "inline@1"
+        },
+        {
+          "command": "quickLaunch.unfavorite",
+          "when": "view == applications && viewItem =~ /^application_favorite.*/",
           "group": "inline@1"
         },
         {

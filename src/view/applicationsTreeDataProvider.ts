@@ -62,6 +62,10 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
                 await ApplicationManager.toggleFavoriteApplication(applicationTreeItem.application);
                 this.refresh();
             }),
+            commands.registerCommand('quickLaunch.unfavorite', async (applicationTreeItem: ApplicationTreeItem) => {
+                await ApplicationManager.toggleFavoriteApplication(applicationTreeItem.application);
+                this.refresh();
+            }),
             commands.registerCommand('quickLaunch.assignKeyboardShortcut', async (applicationTreeItem: ApplicationTreeItem) => {
                 // TODO:
             })
