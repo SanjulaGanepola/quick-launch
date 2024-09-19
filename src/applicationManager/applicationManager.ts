@@ -7,27 +7,32 @@ import { Mac } from "./mac";
 import { Windows } from "./windows";
 
 export class ApplicationManager {
-    static async getInstalledApplications(): Promise<Application[] | undefined> {
-        let applicationManager: PlatformApplicationManager;
-
+    static getPlatformSpecificApplicationManager(): PlatformApplicationManager | undefined {
         switch (process.platform) {
             case Platform.windows:
-                applicationManager = new Windows();
-                break;
+                return new Windows();
             case Platform.mac:
-                applicationManager = new Mac();
-                break;
+                return new Mac();
             case Platform.linux:
-                applicationManager = new Linux();
-                break;
+                return new Linux();
             default:
                 return;
         }
+    }
+
+    static async getInstalledApplications(): Promise<Application[] | undefined> {
+        const applicationManager = ApplicationManager.getPlatformSpecificApplicationManager();
+        if (!applicationManager) {
+            return;
+        }
+
+        const directories = ConfigurationManager.get<string[]>(ConfigurationManager.Section.applicationDirectories) || applicationManager.directories;
+        const extensions = ConfigurationManager.get<string[]>(ConfigurationManager.Section.applicationExtensions) || applicationManager.extensions;
 
         const patterns: string[] = [];
-        for (const searchDirectory of applicationManager.searchDirectories) {
-            for (const extension of applicationManager.extensions) {
-                patterns.push(`${searchDirectory}/**/*.${extension}`);
+        for (const directory of directories) {
+            for (const extension of extensions) {
+                patterns.push(`${directory}/**/*.${extension}`);
             }
         }
 
@@ -49,7 +54,7 @@ export class ApplicationManager {
 
     static async toggleFavoriteApplication(application: Application) {
         let favoriteApplications = ConfigurationManager.get<string[]>(ConfigurationManager.Section.favoriteApplications);
-        if (favoriteApplications) {
+        if (favoriteApplications && favoriteApplications.length > 0) {
             if (favoriteApplications.includes(application.name)) {
                 favoriteApplications = favoriteApplications.filter((favoriteApplication) => {
                     return favoriteApplication !== application.name

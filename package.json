@@ -168,6 +168,22 @@
     "configuration": {
       "title": "Quick Launch",
       "properties": {
+        "QuickLaunch.applicationDirectories": {
+          "type": "array",
+          "description": "The directories to search for installed applications.",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
+        "QuickLaunch.applicationExtensions": {
+          "type": "array",
+          "description": "The possible file extensions for applications.",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
         "QuickLaunch.favoriteApplications": {
           "type": "array",
           "description": "The names of your favorite applications.",

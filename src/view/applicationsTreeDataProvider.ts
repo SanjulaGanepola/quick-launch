@@ -1,5 +1,6 @@
-import { CancellationToken, commands, env, EventEmitter, ExtensionContext, ThemeIcon, TreeDataProvider, TreeItem, Uri, window } from "vscode";
+import { CancellationToken, commands, env, EventEmitter, ExtensionContext, ThemeIcon, TreeDataProvider, TreeItem, Uri, window, workspace } from "vscode";
 import { ApplicationManager } from "../applicationManager/applicationManager";
+import { ConfigurationManager } from "../configurationManager";
 import { DecorationProvider } from "../decorationProvider";
 import ApplicationTreeItem from "./application";
 import { ApplicationsTreeItem } from "./applicationsTreeItem";
@@ -10,6 +11,12 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
     public static VIEW_ID = 'applications';
 
     constructor(context: ExtensionContext) {
+        workspace.onDidChangeConfiguration(async event => {
+            if (event.affectsConfiguration(ConfigurationManager.group)) {
+                this.refresh();
+            }
+        });
+
         const decorationProvider = new DecorationProvider();
         context.subscriptions.push(
             window.registerFileDecorationProvider(decorationProvider),

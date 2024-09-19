@@ -13,5 +13,5 @@ export interface Application {
 export interface PlatformApplicationManager {
     platform: string;
     extensions: string[];
-    searchDirectories: string[];
+    directories: string[];
 }
