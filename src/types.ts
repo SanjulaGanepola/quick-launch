@@ -6,7 +6,8 @@ export enum Platform {
 
 export interface Application {
     name: string,
-    path: string
+    path: string,
+    favorite: boolean
 }
 
 export interface PlatformApplicationManager {

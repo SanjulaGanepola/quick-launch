@@ -1,5 +1,6 @@
 import { CancellationToken, commands, env, EventEmitter, ExtensionContext, ThemeIcon, TreeDataProvider, TreeItem, Uri, window } from "vscode";
 import { ApplicationManager } from "../applicationManager/applicationManager";
+import { DecorationProvider } from "../decorationProvider";
 import ApplicationTreeItem from "./application";
 import { ApplicationsTreeItem } from "./applicationsTreeItem";
 
@@ -9,7 +10,9 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
     public static VIEW_ID = 'applications';
 
     constructor(context: ExtensionContext) {
+        const decorationProvider = new DecorationProvider();
         context.subscriptions.push(
+            window.registerFileDecorationProvider(decorationProvider),
             commands.registerCommand('quickLaunch.launchApplication', async () => {
                 const installedApplications = await ApplicationManager.getInstalledApplications();
                 if (installedApplications) {
@@ -39,11 +42,15 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
             commands.registerCommand('quickLaunch.searchForApplication', async () => {
                 await commands.executeCommand('quickLaunch.launchApplication');
             }),
+            commands.registerCommand('quickLaunch.refresh', async () => {
+                this.refresh();
+            }),
             commands.registerCommand('quickLaunch.launch', async (applicationTreeItem: ApplicationTreeItem) => {
                 await env.openExternal(Uri.parse(applicationTreeItem.application.path));
             }),
             commands.registerCommand('quickLaunch.favorite', async (applicationTreeItem: ApplicationTreeItem) => {
-                // TODO:
+                await ApplicationManager.toggleFavoriteApplication(applicationTreeItem.application);
+                this.refresh();
             }),
             commands.registerCommand('quickLaunch.assignKeyboardShortcut', async (applicationTreeItem: ApplicationTreeItem) => {
                 // TODO:

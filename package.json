@@ -69,6 +69,12 @@
       },
       {
         "category": "Quick Launch",
+        "command": "quickLaunch.refresh",
+        "title": "Refresh",
+        "icon": "$(refresh)"
+      },
+      {
+        "category": "Quick Launch",
         "command": "quickLaunch.launch",
         "title": "Launch",
         "icon": "$(debug-start)"
@@ -88,6 +94,10 @@
     ],
     "menus": {
       "commandPalette": [
+        {
+          "command": "quickLaunch.refresh",
+          "when": "never"
+        },
         {
           "command": "quickLaunch.launch",
           "when": "never"
@@ -111,6 +121,11 @@
           "command": "quickLaunch.searchForApplication",
           "when": "view == applications",
           "group": "navigation@1"
+        },
+        {
+          "command": "quickLaunch.refresh",
+          "when": "view == applications",
+          "group": "navigation@2"
         }
       ],
       "view/item/context": [
@@ -130,7 +145,30 @@
           "group": "inline@2"
         }
       ]
-    }
+    },
+    "configuration": {
+      "title": "Quick Access",
+      "properties": {
+        "QuickAccess.favoriteApplications": {
+          "type": "array",
+          "description": "The names of your favorite applications.",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "colors": [
+      {
+        "id": "QuickAccess.favoriteApplication",
+        "description": "Color for a favorite application",
+        "defaults": {
+          "dark": "#cca700",
+          "light": "#cca700"
+        }
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
