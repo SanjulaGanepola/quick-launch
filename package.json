@@ -1,7 +1,7 @@
 {
   "name": "quick-launch",
   "displayName": "Quick Launch",
-  "description": "Quickly launch any installed Windows or MacOS application right from VS Code.",
+  "description": "Quickly launch any installed Windows, MacOS, or Linux application right from VS Code.",
   "icon": "icon.png",
   "author": {
     "name": "Sanjula Ganepola",
