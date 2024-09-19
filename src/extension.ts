@@ -1,11 +1,15 @@
 import * as vscode from 'vscode';
-import { ApplicationManager } from './applicationManager/applicationManager';
+import { window } from 'vscode';
+import ApplicationsTreeDataProvider from './view/applicationsTreeDataProvider';
 
 export async function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "quick-launch" is now active!');
 
-	const installedApplications = await ApplicationManager.getInstalledApplications();
-	console.log(installedApplications);
+	const applicationTreeDataProvider = new ApplicationsTreeDataProvider(context);
+	const applicationsTreeView = window.createTreeView(ApplicationsTreeDataProvider.VIEW_ID, { treeDataProvider: applicationTreeDataProvider });
+	context.subscriptions.push(
+		applicationsTreeView
+	);
 }
 
 export function deactivate() { }

@@ -1,12 +1,12 @@
 import { glob } from "glob";
 import * as path from "path";
-import { InstalledApplication, Platform, PlatformApplicationManager } from "../types";
+import { Application, Platform, PlatformApplicationManager } from "../types";
 import { Linux } from "./linux";
 import { Mac } from "./mac";
 import { Windows } from "./windows";
 
 export class ApplicationManager {
-    static async getInstalledApplications(): Promise<InstalledApplication[] | undefined> {
+    static async getInstalledApplications(): Promise<Application[] | undefined> {
         let applicationManager: PlatformApplicationManager;
 
         switch (process.platform) {
@@ -34,7 +34,7 @@ export class ApplicationManager {
         return matches.map(match => {
             return {
                 name: path.parse(match).name,
-                path: match
+                path: match.replace(/\\/g, '/')
             }
         })
     }

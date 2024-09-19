@@ -4,7 +4,7 @@ export enum Platform {
     linux = "linux"
 }
 
-export interface InstalledApplication {
+export interface Application {
     name: string,
     path: string
 }

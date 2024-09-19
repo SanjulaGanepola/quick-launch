@@ -2,7 +2,24 @@
   "name": "quick-launch",
   "displayName": "quick-launch",
   "description": "Quickly launch any installed Windows or MacOS application right from VS Code.",
+  "icon": "icon.png",
+  "author": {
+    "name": "Sanjula Ganepola",
+    "url": "https://github.com/sanjulaganepola"
+  },
+  "publisher": "SanjulaGanepola",
+  "license": "Apache-2.0",
   "version": "0.0.1",
+  "repository": {
+    "url": "https://github.com/SanjulaGanepola/quick-launch"
+  },
+  "homepage": "https://github.com/SanjulaGanepola/quick-launch/blob/main/README.md",
+  "bugs": {
+    "url": "https://github.com/SanjulaGanepola/quick-launch/issues"
+  },
+  "keywords": [
+    "Application Launcher"
+  ],
   "engines": {
     "vscode": "^1.93.0"
   },
@@ -14,12 +31,55 @@
   ],
   "main": "./dist/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "quick-launcher-container",
+          "title": "Quick Launcher",
+          "icon": "$(rocket)"
+        }
+      ]
+    },
+    "views": {
+      "quick-launcher-container": [
+        {
+          "id": "applications",
+          "name": "Applications",
+          "icon": "$(rocket)"
+        }
+      ]
+    },
     "commands": [
       {
-        "command": "quick-launch.helloWorld",
-        "title": "Hello World"
+        "category": "Quick Launch",
+        "command": "quickLaunch.addApplication",
+        "title": "Add Application",
+        "icon": "$(add)"
+      },
+      {
+        "category": "Quick Launch",
+        "command": "quickLaunch.launchApplication",
+        "title": "Launch Application",
+        "icon": "$(debug-start)"
       }
-    ]
+    ],
+    "menus": {
+      "commandPalette": [],
+      "view/title": [
+        {
+          "command": "quickLaunch.addApplication",
+          "when": "view == applications",
+          "group": "navigation@0"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "quickLaunch.launchApplication",
+          "when": "view == applications && viewItem =~ /^application.*/",
+          "group": "inline@0"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
@@ -33,7 +93,8 @@
     "test": "vscode-test"
   },
   "dependencies": {
-    "glob": "^11.0.0"
+    "glob": "^11.0.0",
+    "windows-shortcuts": "^0.1.6"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.7",
