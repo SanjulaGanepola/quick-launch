@@ -36,6 +36,6 @@ export class ApplicationManager {
                 name: path.parse(match).name,
                 path: match.replace(/\\/g, '/')
             }
-        })
+        }).sort((a, b) => a.name.localeCompare(b.name));
     }
 }
