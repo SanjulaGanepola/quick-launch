@@ -1,7 +1,7 @@
 import { ConfigurationTarget, workspace } from "vscode";
 
 export namespace ConfigurationManager {
-    export const group: string = "QuickAccess";
+    export const group: string = "QuickLaunch";
 
     export enum Section {
         favoriteApplications = "favoriteApplications"

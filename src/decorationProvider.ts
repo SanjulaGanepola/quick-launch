@@ -6,7 +6,7 @@ export class DecorationProvider implements FileDecorationProvider {
     provideFileDecoration(uri: Uri, token: CancellationToken): ProviderResult<FileDecoration> {
         if (uri.scheme === ApplicationTreeItem.contextValue && uri.path === 'favorite') {
             return {
-                color: new ThemeColor('QuickAccess.favoriteApplication')
+                color: new ThemeColor('QuickLaunch.favoriteApplication')
             };
         }
     }

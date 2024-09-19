@@ -69,6 +69,12 @@
       },
       {
         "category": "Quick Launch",
+        "command": "quickLaunch.settings",
+        "title": "Settings",
+        "icon": "$(gear)"
+      },
+      {
+        "category": "Quick Launch",
         "command": "quickLaunch.refresh",
         "title": "Refresh",
         "icon": "$(refresh)"
@@ -96,6 +102,10 @@
       "commandPalette": [
         {
           "command": "quickLaunch.searchForApplication",
+          "when": "never"
+        },
+        {
+          "command": "quickLaunch.settings",
           "when": "never"
         },
         {
@@ -127,9 +137,14 @@
           "group": "navigation@1"
         },
         {
-          "command": "quickLaunch.refresh",
+          "command": "quickLaunch.settings",
           "when": "view == applications",
           "group": "navigation@2"
+        },
+        {
+          "command": "quickLaunch.refresh",
+          "when": "view == applications",
+          "group": "navigation@3"
         }
       ],
       "view/item/context": [
@@ -151,9 +166,9 @@
       ]
     },
     "configuration": {
-      "title": "Quick Access",
+      "title": "Quick Launch",
       "properties": {
-        "QuickAccess.favoriteApplications": {
+        "QuickLaunch.favoriteApplications": {
           "type": "array",
           "description": "The names of your favorite applications.",
           "default": [],
@@ -165,7 +180,7 @@
     },
     "colors": [
       {
-        "id": "QuickAccess.favoriteApplication",
+        "id": "QuickLaunch.favoriteApplication",
         "description": "Color for a favorite application",
         "defaults": {
           "dark": "#cca700",

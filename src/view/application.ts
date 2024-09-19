@@ -19,7 +19,7 @@ export default class ApplicationTreeItem extends TreeItem implements Application
         }
 
         if(application.favorite) {
-            this.iconPath = new ThemeIcon('rocket', new ThemeColor('QuickAccess.favoriteApplication'));
+            this.iconPath = new ThemeIcon('rocket', new ThemeColor('QuickLaunch.favoriteApplication'));
             this.resourceUri = Uri.parse(`${ApplicationTreeItem.contextValue}:favorite`, true);
         } else {
             this.iconPath = new ThemeIcon('rocket');
