@@ -32,6 +32,10 @@ export namespace ConfigurationManager {
         return workspace.getConfiguration(ConfigurationManager.group).get(section) as T;
     }
 
+    // export function get<T>(section: Section, scope: ConfigurationScope): T {
+    //     return workspace.getConfiguration(ConfigurationManager.group, scope).get(section) as T;
+    // }
+
     export function set(section: Section, value: any): Thenable<void> {
         return workspace.getConfiguration(ConfigurationManager.group).update(section, value, ConfigurationTarget.Global);
     }

@@ -216,12 +216,12 @@
         },
         {
           "command": "quickLaunch.favorite",
-          "when": "view == applications && viewItem =~ /^application_unfavorite.*/",
+          "when": "view == applications && viewItem =~ /^application.*_unfavorite.*/",
           "group": "inline@1"
         },
         {
           "command": "quickLaunch.unfavorite",
-          "when": "view == applications && viewItem =~ /^application_favorite.*/",
+          "when": "view == applications && viewItem =~ /^application.*_favorite.*/",
           "group": "inline@1"
         },
         {

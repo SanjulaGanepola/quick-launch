@@ -16,19 +16,11 @@ export default class ApplicationTreeItem extends TreeItem implements Application
             command: 'quickLaunch.launch',
             arguments: [this]
         }
-
-        if (application.favorite) {
-            this.contextValue = `${ApplicationTreeItem.contextValue}_favorite`;
-            this.iconPath = new ThemeIcon('rocket', new ThemeColor('QuickLaunch.favoriteApplication'));
-            this.resourceUri = Uri.parse(`${ApplicationTreeItem.contextValue}:favorite`, true);
-        } else if (application.custom) {
-            this.contextValue = `${ApplicationTreeItem.contextValue}_unfavorite`;
-            this.iconPath = new ThemeIcon('rocket', new ThemeColor('QuickLaunch.customApplication'));
-            this.resourceUri = Uri.parse(`${ApplicationTreeItem.contextValue}:custom`, true);
-        } else {
-            this.contextValue = `${ApplicationTreeItem.contextValue}_unfavorite`;
-            this.iconPath = new ThemeIcon('rocket');
-        }
+        this.contextValue = `${ApplicationTreeItem.contextValue}` +
+            (application.favorite ? '_favorite' : '_unfavorite') +
+            (application.custom ? '_custom' : '_builtin');
+            this.iconPath = new ThemeIcon('rocket', application.favorite ? new ThemeColor('QuickLaunch.favoriteApplication') : (application.custom ? new ThemeColor('QuickLaunch.customApplication') : undefined));
+        this.resourceUri = Uri.parse(`${ApplicationTreeItem.contextValue}:${application.path}?favorite=${application.favorite}&custom=${application.custom}`, true);
     }
 
     async getChildren(): Promise<ApplicationsTreeItem[]> {

@@ -5,13 +5,24 @@ export class DecorationProvider implements FileDecorationProvider {
     onDidChangeFileDecorations?: Event<Uri | Uri[] | undefined> | undefined;
     provideFileDecoration(uri: Uri, token: CancellationToken): ProviderResult<FileDecoration> {
         if (uri.scheme === ApplicationTreeItem.contextValue) {
-            if (uri.path === 'favorite') {
+            const params = new URLSearchParams(uri.query);
+            if (params.get('favorite') === 'true' && params.get('custom') === 'true') {
                 return {
-                    color: new ThemeColor('QuickLaunch.favoriteApplication')
+                    badge: '⭐⚙️',
+                    color: new ThemeColor('QuickLaunch.favoriteApplication'),
+                    tooltip: 'Favorite Application'
                 };
-            } else if (uri.path === 'custom') {
+            } else if (params.get('favorite') === 'true') {
                 return {
-                    color: new ThemeColor('QuickLaunch.customApplication')
+                    badge: '⭐',
+                    color: new ThemeColor('QuickLaunch.favoriteApplication'),
+                    tooltip: 'Favorite Application'
+                };
+            } else if (params.get('custom') === 'true') {
+                return {
+                    badge: '⚙️',
+                    color: new ThemeColor('QuickLaunch.customApplication'),
+                    tooltip: 'Custom Application'
                 };
             }
         }
