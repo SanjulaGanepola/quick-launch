@@ -22,9 +22,9 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
         context.subscriptions.push(
             window.registerFileDecorationProvider(decorationProvider),
             commands.registerCommand('quickLaunch.launchApplication', async () => {
-                const installedApplications = await ApplicationManager.getInstalledApplications();
-                if (installedApplications) {
-                    const items = installedApplications.map(application => {
+                const applications = await ApplicationManager.getApplications();
+                if (applications.length > 0) {
+                    const items = applications.map(application => {
                         return {
                             iconPath: new ThemeIcon('rocket'),
                             label: application.name,
@@ -142,9 +142,9 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
         if (element) {
             return element.getChildren();
         } else {
-            const installedApplications = await ApplicationManager.getInstalledApplications();
-            if (installedApplications) {
-                return installedApplications.map(application => new ApplicationTreeItem(application));
+            const applications = await ApplicationManager.getApplications();
+            if (applications.length > 0) {
+                return applications.map(application => new ApplicationTreeItem(application));
             } else {
                 return [];
             }

@@ -21,10 +21,10 @@ export class ApplicationManager {
         }
     }
 
-    static async getInstalledApplications(): Promise<Application[] | undefined> {
+    static async getApplications(): Promise<Application[]> {
         const applicationManager = ApplicationManager.getPlatformSpecificApplicationManager();
         if (!applicationManager) {
-            return;
+            return [];
         }
 
         const applicationDirectories = ConfigurationManager.get<string[]>(ConfigurationManager.Section.applicationDirectories) || applicationManager.directories;

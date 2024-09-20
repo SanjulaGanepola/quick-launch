@@ -1,7 +1,7 @@
 {
   "name": "quick-launch",
   "displayName": "Quick Launch",
-  "description": "Quickly launch any installed Windows, MacOS, or Linux application right from VS Code.",
+  "description": "Quickly launch any Windows, MacOS, or Linux application right from VS Code.",
   "icon": "icon.png",
   "author": {
     "name": "Sanjula Ganepola",
@@ -52,7 +52,7 @@
     "viewsWelcome": [
       {
         "view": "applications",
-        "contents": "No installed applications found.\nAdd individual custom applications that are not found in the application directories.\n[Add Custom Applications](command:quickLaunch.addCustomApplications)\nAdd the directories to search for installed applications.\n[Add Application Directories](command:quickLaunch.addApplicationDirectories)\n Add the possible file extensions for applications.\n[Add Application Extensions](command:quickLaunch.addApplicationExtensions)"
+        "contents": "No applications found.\nAdd individual custom applications that are not found in the application directories.\n[Add Custom Applications](command:quickLaunch.addCustomApplications)\nAdd the directories to search for applications.\n[Add Application Directories](command:quickLaunch.addApplicationDirectories)\n Add the possible file extensions for applications.\n[Add Application Extensions](command:quickLaunch.addApplicationExtensions)"
       }
     ],
     "commands": [
@@ -236,7 +236,7 @@
       "properties": {
         "QuickLaunch.applicationDirectories": {
           "type": "array",
-          "description": "The directories to search for installed applications.",
+          "description": "The directories to search for applications.",
           "default": [],
           "items": {
             "type": "string"
