@@ -46,8 +46,9 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
             }),
             commands.registerCommand('quickLaunch.addCustomApplications', async () => {
                 const customApplications = await window.showOpenDialog({
-                    title: 'Add Custom Application(s)',
+                    title: 'Add Custom Applications',
                     canSelectFiles: true,
+                    canSelectFolders: false,
                     canSelectMany: true
                 });
 
@@ -55,6 +56,43 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
                     const existingApplicationNames = await ApplicationManager.addCustomApplications(customApplications);
                     if (existingApplicationNames.length > 0) {
                         window.showErrorMessage(`The following are already added as custom applications: ${existingApplicationNames.join(', ')}`);
+                    }
+                }
+            }),
+            commands.registerCommand('quickLaunch.addApplicationDirectories', async () => {
+                const applicationDirectories = await window.showOpenDialog({
+                    title: 'Add Application Directories',
+                    canSelectFiles: false,
+                    canSelectFolders: true,
+                    canSelectMany: true
+                });
+
+                if (applicationDirectories && applicationDirectories.length > 0) {
+                    const existingApplicationDirectories = await ApplicationManager.addApplicationDirectories(applicationDirectories);
+                    if (existingApplicationDirectories.length > 0) {
+                        window.showErrorMessage(`The following are already added as application directories: ${existingApplicationDirectories.join(', ')}`);
+                    }
+                }
+            }),
+            commands.registerCommand('quickLaunch.addApplicationExtensions', async () => {
+                const applicationExtensions = ConfigurationManager.get<string[]>(ConfigurationManager.Section.applicationExtensions);
+
+                const applicationExtension = await window.showInputBox({
+                    prompt: `Enter the possible file extensions for applications. Existing application extensions: ${applicationExtensions.join(', ')}.`,
+                    placeHolder: 'Application Extensions',
+                    validateInput: (value) => {
+                        if (applicationExtensions.includes(value)) {
+                            return `Application extension already added. Existing application extensions: ${applicationExtensions.join(', ')}`;
+                        } else {
+                            return null;
+                        }
+                    }
+                });
+
+                if (applicationExtension) {
+                    const isSuccess = await ApplicationManager.addApplicationExtensions(applicationExtension);
+                    if (!isSuccess) {
+                        window.showErrorMessage(`${applicationExtension} is already added as an application extension`);
                     }
                 }
             }),

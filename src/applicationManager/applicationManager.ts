@@ -105,4 +105,42 @@ export class ApplicationManager {
         await ConfigurationManager.set(ConfigurationManager.Section.customApplications, customApplications);
         return existingApplicationNames;
     }
+
+    static async addApplicationDirectories(directoryUris: Uri[]): Promise<string[]> {
+        let applicationDirectories = ConfigurationManager.get<string[]>(ConfigurationManager.Section.applicationDirectories);
+        if (!applicationDirectories) {
+            applicationDirectories = [];
+        }
+
+        let existingApplicationDirectories = [];
+
+        for (const directoryUri of directoryUris) {
+            const applicationDirectoryPath = directoryUri.fsPath.replace(/\\/g, '/');
+            if (!applicationDirectories.includes(applicationDirectoryPath)) {
+                applicationDirectories.push(applicationDirectoryPath);
+            } else {
+                existingApplicationDirectories.push(applicationDirectoryPath);
+            }
+        }
+
+        await ConfigurationManager.set(ConfigurationManager.Section.applicationDirectories, applicationDirectories);
+        return existingApplicationDirectories;
+    }
+
+    static async addApplicationExtensions(applicationExtension: string): Promise<boolean> {
+        let applicationExtensions = ConfigurationManager.get<string[]>(ConfigurationManager.Section.applicationExtensions);
+        if (!applicationExtensions) {
+            applicationExtensions = [];
+        }
+
+        if (!applicationExtensions.includes(applicationExtension)) {
+            applicationExtensions.push(applicationExtension);
+        } else {
+            return false;
+        }
+
+        await ConfigurationManager.set(ConfigurationManager.Section.applicationExtensions, applicationExtensions);
+        return true
+
+    }
 }

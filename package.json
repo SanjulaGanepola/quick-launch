@@ -49,6 +49,12 @@
         }
       ]
     },
+    "viewsWelcome": [
+      {
+        "view": "applications",
+        "contents": "No installed applications found.\nAdd individual custom applications that are not found in the application directories.\n[Add Custom Applications](command:quickLaunch.addCustomApplications)\nAdd the directories to search for installed applications.\n[Add Application Directories](command:quickLaunch.addApplicationDirectories)\n Add the possible file extensions for applications.\n[Add Application Extensions](command:quickLaunch.addApplicationExtensions)"
+      }
+    ],
     "commands": [
       {
         "category": "Quick Launch",
@@ -58,8 +64,17 @@
       {
         "category": "Quick Launch",
         "command": "quickLaunch.addCustomApplications",
-        "title": "Add Custom Applications",
-        "icon": "$(add)"
+        "title": "Custom Applications"
+      },
+      {
+        "category": "Quick Launch",
+        "command": "quickLaunch.addApplicationDirectories",
+        "title": "Application Directories"
+      },
+      {
+        "category": "Quick Launch",
+        "command": "quickLaunch.addApplicationExtensions",
+        "title": "Application Extensions"
       },
       {
         "category": "Quick Launch",
@@ -104,8 +119,27 @@
         "icon": "$(record-keys)"
       }
     ],
+    "submenus": [
+      {
+        "id": "quickLaunch.add",
+        "label": "Add...",
+        "icon": "$(add)"
+      }
+    ],
     "menus": {
       "commandPalette": [
+        {
+          "command": "quickLaunch.addCustomApplications",
+          "when": "never"
+        },
+        {
+          "command": "quickLaunch.addApplicationDirectories",
+          "when": "never"
+        },
+        {
+          "command": "quickLaunch.addApplicationExtensions",
+          "when": "never"
+        },
         {
           "command": "quickLaunch.searchForApplication",
           "when": "never"
@@ -137,7 +171,7 @@
       ],
       "view/title": [
         {
-          "command": "quickLaunch.addCustomApplications",
+          "submenu": "quickLaunch.add",
           "when": "view == applications",
           "group": "navigation@0"
         },
@@ -155,6 +189,23 @@
           "command": "quickLaunch.refresh",
           "when": "view == applications",
           "group": "navigation@3"
+        }
+      ],
+      "quickLaunch.add": [
+        {
+          "command": "quickLaunch.addCustomApplications",
+          "when": "view == applications",
+          "group": "0_add@0"
+        },
+        {
+          "command": "quickLaunch.addApplicationDirectories",
+          "when": "view == applications",
+          "group": "1_setting@0"
+        },
+        {
+          "command": "quickLaunch.addApplicationExtensions",
+          "when": "view == applications",
+          "group": "1_setting@1"
         }
       ],
       "view/item/context": [
