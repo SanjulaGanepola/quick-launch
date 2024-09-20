@@ -118,6 +118,9 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
             }),
             commands.registerCommand('quickLaunch.assignKeyboardShortcut', async (applicationTreeItem: ApplicationTreeItem) => {
                 // TODO:
+            }),
+            commands.registerCommand('quickLaunch.revealInFileExplorer', async (applicationTreeItem: ApplicationTreeItem) => {
+                commands.executeCommand('revealFileInOS', Uri.file(applicationTreeItem.application.path));
             })
         );
     }

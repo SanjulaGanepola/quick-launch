@@ -117,6 +117,11 @@
         "command": "quickLaunch.assignKeyboardShortcut",
         "title": "Assign Keyboard Shortcut",
         "icon": "$(record-keys)"
+      },
+      {
+        "category": "Quick Launch",
+        "command": "quickLaunch.revealInFileExplorer",
+        "title": "Reveal in File Explorer"
       }
     ],
     "submenus": [
@@ -166,6 +171,10 @@
         },
         {
           "command": "quickLaunch.assignKeyboardShortcut",
+          "when": "never"
+        },
+        {
+          "command": "quickLaunch.revealInFileExplorer",
           "when": "never"
         }
       ],
@@ -228,6 +237,11 @@
           "command": "quickLaunch.assignKeyboardShortcut",
           "when": "view == applications && viewItem =~ /^application.*/",
           "group": "inline@2"
+        },
+        {
+          "command": "quickLaunch.revealInFileExplorer",
+          "when": "view == applications && viewItem =~ /^application.*/",
+          "group": "0_reveal@0"
         }
       ]
     },
