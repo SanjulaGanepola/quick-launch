@@ -17,10 +17,14 @@ export default class ApplicationTreeItem extends TreeItem implements Application
             arguments: [this]
         }
 
-        if(application.favorite) {
+        if (application.favorite) {
             this.contextValue = `${ApplicationTreeItem.contextValue}_favorite`;
             this.iconPath = new ThemeIcon('rocket', new ThemeColor('QuickLaunch.favoriteApplication'));
             this.resourceUri = Uri.parse(`${ApplicationTreeItem.contextValue}:favorite`, true);
+        } else if (application.custom) {
+            this.contextValue = `${ApplicationTreeItem.contextValue}_unfavorite`;
+            this.iconPath = new ThemeIcon('rocket', new ThemeColor('QuickLaunch.customApplication'));
+            this.resourceUri = Uri.parse(`${ApplicationTreeItem.contextValue}:custom`, true);
         } else {
             this.contextValue = `${ApplicationTreeItem.contextValue}_unfavorite`;
             this.iconPath = new ThemeIcon('rocket');

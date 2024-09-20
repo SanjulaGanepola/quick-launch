@@ -1,5 +1,6 @@
 import { glob } from "glob";
 import * as path from "path";
+import { Uri } from "vscode";
 import { ConfigurationManager } from "../configurationManager";
 import { Application, Platform, PlatformApplicationManager } from "../types";
 import { Linux } from "./linux";
@@ -26,30 +27,45 @@ export class ApplicationManager {
             return;
         }
 
-        const directories = ConfigurationManager.get<string[]>(ConfigurationManager.Section.applicationDirectories) || applicationManager.directories;
-        const extensions = ConfigurationManager.get<string[]>(ConfigurationManager.Section.applicationExtensions) || applicationManager.extensions;
+        const applicationDirectories = ConfigurationManager.get<string[]>(ConfigurationManager.Section.applicationDirectories) || applicationManager.directories;
+        const applicationExtensions = ConfigurationManager.get<string[]>(ConfigurationManager.Section.applicationExtensions) || applicationManager.extensions;
 
         const patterns: string[] = [];
-        for (const directory of directories) {
-            for (const extension of extensions) {
+        for (const directory of applicationDirectories) {
+            for (const extension of applicationExtensions) {
                 patterns.push(`${directory}/**/*.${extension}`);
             }
         }
 
+        const customApplications = ConfigurationManager.get<string[]>(ConfigurationManager.Section.customApplications);
         const favoriteApplications = ConfigurationManager.get<string[]>(ConfigurationManager.Section.favoriteApplications);
         const matches = await glob(patterns);
-        return matches
+        return customApplications.concat(matches)
             .map(match => {
                 return {
                     name: path.parse(match).name,
                     path: match.replace(/\\/g, '/'),
-                    favorite: favoriteApplications ? favoriteApplications.includes(path.parse(match).name) : false
+                    favorite: favoriteApplications && favoriteApplications.length > 0 ? favoriteApplications.includes(path.parse(match).name) : false,
+                    custom: customApplications && customApplications.length > 0 ? customApplications.includes(match) : false
                 }
             })
             .filter((match, index, self) =>
                 index === self.findIndex(t => t.name === match.name)
             )
-            .sort((a, b) => a.name.localeCompare(b.name));
+            .sort((a, b) => {
+                // Sort by favorite first
+                if (a.favorite !== b.favorite) {
+                    return a.favorite ? -1 : 1;
+                }
+
+                // Sort by custom second
+                if (a.custom !== b.custom) {
+                    return a.custom ? -1 : 1;
+                }
+
+                // Sort alphabetically by name
+                return a.name.localeCompare(b.name);
+            });
     }
 
     static async toggleFavoriteApplication(application: Application) {
@@ -67,5 +83,26 @@ export class ApplicationManager {
         }
 
         await ConfigurationManager.set(ConfigurationManager.Section.favoriteApplications, favoriteApplications);
+    }
+
+    static async addCustomApplications(applicationUris: Uri[]): Promise<string[]> {
+        let customApplications = ConfigurationManager.get<string[]>(ConfigurationManager.Section.customApplications);
+        if (!customApplications) {
+            customApplications = [];
+        }
+
+        let existingApplicationNames = [];
+
+        for (const applicationUri of applicationUris) {
+            const customApplicationPath = applicationUri.fsPath.replace(/\\/g, '/');
+            if (!customApplications.includes(customApplicationPath)) {
+                customApplications.push(customApplicationPath);
+            } else {
+                existingApplicationNames.push(path.parse(customApplicationPath).name);
+            }
+        }
+
+        await ConfigurationManager.set(ConfigurationManager.Section.customApplications, customApplications);
+        return existingApplicationNames;
     }
 }

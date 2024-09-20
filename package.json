@@ -57,8 +57,8 @@
       },
       {
         "category": "Quick Launch",
-        "command": "quickLaunch.addApplication",
-        "title": "Add Application",
+        "command": "quickLaunch.addCustomApplications",
+        "title": "Add Custom Applications",
         "icon": "$(add)"
       },
       {
@@ -137,7 +137,7 @@
       ],
       "view/title": [
         {
-          "command": "quickLaunch.addApplication",
+          "command": "quickLaunch.addCustomApplications",
           "when": "view == applications",
           "group": "navigation@0"
         },
@@ -199,6 +199,14 @@
             "type": "string"
           }
         },
+        "QuickLaunch.customApplications": {
+          "type": "array",
+          "description": "A user maintained set of custom applications.",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
         "QuickLaunch.favoriteApplications": {
           "type": "array",
           "description": "The names of your favorite applications.",
@@ -216,6 +224,14 @@
         "defaults": {
           "dark": "#cca700",
           "light": "#cca700"
+        }
+      },
+      {
+        "id": "QuickLaunch.customApplication",
+        "description": "Color for a custom application",
+        "defaults": {
+          "dark": "#89d185",
+          "light": "#89d185"
         }
       }
     ]

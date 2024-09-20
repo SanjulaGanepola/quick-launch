@@ -13,6 +13,7 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
     constructor(context: ExtensionContext) {
         workspace.onDidChangeConfiguration(async event => {
             if (event.affectsConfiguration(ConfigurationManager.group)) {
+                ConfigurationManager.initialize();
                 this.refresh();
             }
         });
@@ -43,8 +44,19 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
                     window.showErrorMessage('No applications found');
                 }
             }),
-            commands.registerCommand('quickLaunch.addApplication', async () => {
-                // TODO:
+            commands.registerCommand('quickLaunch.addCustomApplications', async () => {
+                const customApplications = await window.showOpenDialog({
+                    title: 'Add Custom Application(s)',
+                    canSelectFiles: true,
+                    canSelectMany: true
+                });
+
+                if (customApplications && customApplications.length > 0) {
+                    const existingApplicationNames = await ApplicationManager.addCustomApplications(customApplications);
+                    if (existingApplicationNames.length > 0) {
+                        window.showErrorMessage(`The following are already added as custom applications: ${existingApplicationNames.join(', ')}`);
+                    }
+                }
             }),
             commands.registerCommand('quickLaunch.searchForApplication', async () => {
                 await commands.executeCommand('quickLaunch.launchApplication');

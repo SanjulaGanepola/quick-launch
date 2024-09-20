@@ -3,7 +3,7 @@ import { window } from 'vscode';
 import { ConfigurationManager } from './configurationManager';
 import ApplicationsTreeDataProvider from './view/applicationsTreeDataProvider';
 
-export async function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext): Promise<void> {
 	console.log('Congratulations, your extension "quick-launch" is now active!');
 
 	ConfigurationManager.initialize();
@@ -15,4 +15,4 @@ export async function activate(context: vscode.ExtensionContext) {
 	);
 }
 
-export function deactivate() { }
+export function deactivate(): void { }
