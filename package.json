@@ -455,7 +455,7 @@
         },
         "QuickLaunch.view": {
           "type": "object",
-          "description": "Controls which applications are displayed.",
+          "markdownDescription": "Controls which applications are displayed.\n\n* `Favorites`: Display favorite applications.\n\n* `Customs`: Display custom applications.\n\n* `Other`: Display other applications.",
           "default": {
             "Favorites": true,
             "Customs": true,
@@ -479,7 +479,7 @@
         },
         "QuickLaunch.sort": {
           "type": "object",
-          "description": "Controls what order the applications are sorted in.",
+          "markdownDescription": "Controls what order the applications are sorted in.\n\n* `Priority`: Applications are sorted based on priority. Favorite applications are rendered first followed by custom applications and lastly the other applications. Applications which are both favorites and custom will take the highest position in the list.\n\n* `Alphabetically`: Applications are sorted alphabetically by name.",
           "default": {
             "Priority": true,
             "Alphabetically": true
