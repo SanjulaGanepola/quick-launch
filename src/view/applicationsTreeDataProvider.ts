@@ -99,6 +99,36 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
             commands.registerCommand('quickLaunch.searchForApplication', async () => {
                 await commands.executeCommand('quickLaunch.launchApplication');
             }),
+            commands.registerCommand('quickLaunch.favoritesEnable', async () => {
+                ApplicationManager.toggleView('Favorites');
+            }),
+            commands.registerCommand('quickLaunch.favoritesDisable', async () => {
+                ApplicationManager.toggleView('Favorites');
+            }),
+            commands.registerCommand('quickLaunch.customsEnable', async () => {
+                ApplicationManager.toggleView('Customs');
+            }),
+            commands.registerCommand('quickLaunch.customsDisable', async () => {
+                ApplicationManager.toggleView('Customs');
+            }),
+            commands.registerCommand('quickLaunch.otherEnable', async () => {
+                ApplicationManager.toggleView('Other');
+            }),
+            commands.registerCommand('quickLaunch.otherDisable', async () => {
+                ApplicationManager.toggleView('Other');
+            }),
+            commands.registerCommand('quickLaunch.priorityEnable', async () => {
+                ApplicationManager.toggleSort('Priority');
+            }),
+            commands.registerCommand('quickLaunch.priorityDisable', async () => {
+                ApplicationManager.toggleSort('Priority');
+            }),
+            commands.registerCommand('quickLaunch.alphabeticallyEnable', async () => {
+                ApplicationManager.toggleSort('Alphabetically');
+            }),
+            commands.registerCommand('quickLaunch.alphabeticallyDisable', async () => {
+                ApplicationManager.toggleSort('Alphabetically');
+            }),
             commands.registerCommand('quickLaunch.settings', async () => {
                 await commands.executeCommand('workbench.action.openSettings', '@ext:SanjulaGanepola.quick-launch');
             }),

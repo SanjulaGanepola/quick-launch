@@ -84,9 +84,58 @@
       },
       {
         "category": "Quick Launch",
+        "command": "quickLaunch.favoritesEnable",
+        "title": "✓ Favorites"
+      },
+      {
+        "category": "Quick Launch",
+        "command": "quickLaunch.favoritesDisable",
+        "title": "Favorites"
+      },
+      {
+        "category": "Quick Launch",
+        "command": "quickLaunch.customsEnable",
+        "title": "✓ Customs"
+      },
+      {
+        "category": "Quick Launch",
+        "command": "quickLaunch.customsDisable",
+        "title": "Customs"
+      },
+      {
+        "category": "Quick Launch",
+        "command": "quickLaunch.otherEnable",
+        "title": "✓ Other"
+      },
+      {
+        "category": "Quick Launch",
+        "command": "quickLaunch.otherDisable",
+        "title": "Other"
+      },
+      {
+        "category": "Quick Launch",
+        "command": "quickLaunch.priorityEnable",
+        "title": "✓ Priority"
+      },
+      {
+        "category": "Quick Launch",
+        "command": "quickLaunch.priorityDisable",
+        "title": "Priority"
+      },
+      {
+        "category": "Quick Launch",
+        "command": "quickLaunch.alphabeticallyEnable",
+        "title": "✓ Alphabetically"
+      },
+      {
+        "category": "Quick Launch",
+        "command": "quickLaunch.alphabeticallyDisable",
+        "title": "Alphabetically"
+      },
+      {
+        "category": "Quick Launch",
         "command": "quickLaunch.settings",
-        "title": "Settings",
-        "icon": "$(gear)"
+        "title": "Settings"
       },
       {
         "category": "Quick Launch",
@@ -129,6 +178,19 @@
         "id": "quickLaunch.add",
         "label": "Add...",
         "icon": "$(add)"
+      },
+      {
+        "id": "quickLaunch.moreActions",
+        "label": "More Actions...",
+        "icon": "$(ellipsis)"
+      },
+      {
+        "id": "quickLaunch.viewApplications",
+        "label": "View"
+      },
+      {
+        "id": "quickLaunch.sortApplications",
+        "label": "Sort"
       }
     ],
     "menus": {
@@ -147,6 +209,46 @@
         },
         {
           "command": "quickLaunch.searchForApplication",
+          "when": "never"
+        },
+        {
+          "command": "quickLaunch.favoritesEnable",
+          "when": "never"
+        },
+        {
+          "command": "quickLaunch.favoritesDisable",
+          "when": "never"
+        },
+        {
+          "command": "quickLaunch.customsEnable",
+          "when": "never"
+        },
+        {
+          "command": "quickLaunch.customsDisable",
+          "when": "never"
+        },
+        {
+          "command": "quickLaunch.otherEnable",
+          "when": "never"
+        },
+        {
+          "command": "quickLaunch.otherDisable",
+          "when": "never"
+        },
+        {
+          "command": "quickLaunch.priorityEnable",
+          "when": "never"
+        },
+        {
+          "command": "quickLaunch.priorityDisable",
+          "when": "never"
+        },
+        {
+          "command": "quickLaunch.alphabeticallyEnable",
+          "when": "never"
+        },
+        {
+          "command": "quickLaunch.alphabeticallyDisable",
           "when": "never"
         },
         {
@@ -190,12 +292,12 @@
           "group": "navigation@1"
         },
         {
-          "command": "quickLaunch.settings",
+          "command": "quickLaunch.refresh",
           "when": "view == applications",
           "group": "navigation@2"
         },
         {
-          "command": "quickLaunch.refresh",
+          "submenu": "quickLaunch.moreActions",
           "when": "view == applications",
           "group": "navigation@3"
         }
@@ -215,6 +317,77 @@
           "command": "quickLaunch.addApplicationExtensions",
           "when": "view == applications",
           "group": "1_setting@1"
+        }
+      ],
+      "quickLaunch.moreActions": [
+        {
+          "submenu": "quickLaunch.viewApplications",
+          "when": "view == applications",
+          "group": "0_listControl@0"
+        },
+        {
+          "submenu": "quickLaunch.sortApplications",
+          "when": "view == applications",
+          "group": "0_listControl@1"
+        },
+        {
+          "command": "quickLaunch.settings",
+          "when": "view == applications",
+          "group": "1_settings@0"
+        }
+      ],
+      "quickLaunch.viewApplications": [
+        {
+          "command": "quickLaunch.favoritesEnable",
+          "when": "view == applications && QuickLaunch.view.favorite",
+          "group": "0_view@0"
+        },
+        {
+          "command": "quickLaunch.favoritesDisable",
+          "when": "view == applications && !QuickLaunch.view.favorite",
+          "group": "0_view@0"
+        },
+        {
+          "command": "quickLaunch.customsEnable",
+          "when": "view == applications && QuickLaunch.view.customs",
+          "group": "0_view@1"
+        },
+        {
+          "command": "quickLaunch.customsDisable",
+          "when": "view == applications && !QuickLaunch.view.customs",
+          "group": "0_view@1"
+        },
+        {
+          "command": "quickLaunch.otherEnable",
+          "when": "view == applications && QuickLaunch.view.other",
+          "group": "0_view@2"
+        },
+        {
+          "command": "quickLaunch.otherDisable",
+          "when": "view == applications && !QuickLaunch.view.other",
+          "group": "0_view@2"
+        }
+      ],
+      "quickLaunch.sortApplications": [
+        {
+          "command": "quickLaunch.priorityEnable",
+          "when": "view == applications && QuickLaunch.sort.priority",
+          "group": "0_sort@0"
+        },
+        {
+          "command": "quickLaunch.priorityDisable",
+          "when": "view == applications && !QuickLaunch.sort.priority",
+          "group": "0_sort@0"
+        },
+        {
+          "command": "quickLaunch.alphabeticallyEnable",
+          "when": "view == applications && QuickLaunch.sort.alphabetically",
+          "group": "0_sort@1"
+        },
+        {
+          "command": "quickLaunch.alphabeticallyDisable",
+          "when": "view == applications && !QuickLaunch.sort.alphabetically",
+          "group": "0_sort@1"
         }
       ],
       "view/item/context": [
@@ -279,6 +452,49 @@
           "items": {
             "type": "string"
           }
+        },
+        "QuickLaunch.view": {
+          "type": "object",
+          "description": "Controls which applications are displayed.",
+          "default": {
+            "Favorites": true,
+            "Customs": true,
+            "Other": true
+          },
+          "properties": {
+            "Favorites": {
+              "type": "boolean",
+              "default": true
+            },
+            "Customs": {
+              "type": "boolean",
+              "default": true
+            },
+            "Other": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "QuickLaunch.sort": {
+          "type": "object",
+          "description": "Controls what order the applications are sorted in.",
+          "default": {
+            "Priority": true,
+            "Alphabetically": true
+          },
+          "properties": {
+            "Priority": {
+              "type": "boolean",
+              "default": true
+            },
+            "Alphabetically": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          "additionalProperties": false
         }
       }
     },
@@ -297,6 +513,14 @@
         "defaults": {
           "dark": "#89d185",
           "light": "#89d185"
+        }
+      },
+      {
+        "id": "QuickLaunch.favoriteCustomApplication",
+        "description": "Color for a favorite custom application",
+        "defaults": {
+          "dark": "#4CB1FF",
+          "light": "#4CB1FF"
         }
       }
     ]

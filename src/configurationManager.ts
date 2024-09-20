@@ -8,7 +8,9 @@ export namespace ConfigurationManager {
         applicationDirectories = "applicationDirectories",
         applicationExtensions = "applicationExtensions",
         customApplications = "customApplications",
-        favoriteApplications = "favoriteApplications"
+        favoriteApplications = "favoriteApplications",
+        view = "view",
+        sort = "sort"
     }
 
     export function initialize(): void {

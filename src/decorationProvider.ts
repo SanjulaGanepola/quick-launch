@@ -8,8 +8,8 @@ export class DecorationProvider implements FileDecorationProvider {
             const params = new URLSearchParams(uri.query);
             if (params.get('favorite') === 'true' && params.get('custom') === 'true') {
                 return {
-                    badge: '⭐⚙️',
-                    color: new ThemeColor('QuickLaunch.favoriteApplication'),
+                    badge: '🚀',
+                    color: new ThemeColor('QuickLaunch.favoriteCustomApplication'),
                     tooltip: 'Favorite Application'
                 };
             } else if (params.get('favorite') === 'true') {

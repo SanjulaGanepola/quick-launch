@@ -1,8 +1,8 @@
 import { glob } from "glob";
 import * as path from "path";
-import { Uri } from "vscode";
+import { commands, Uri } from "vscode";
 import { ConfigurationManager } from "../configurationManager";
-import { Application, Platform, PlatformApplicationManager } from "../types";
+import { Application, Platform, PlatformApplicationManager, Sort, View } from "../types";
 import { Linux } from "./linux";
 import { Mac } from "./mac";
 import { Windows } from "./windows";
@@ -37,34 +37,60 @@ export class ApplicationManager {
             }
         }
 
-        const customApplications = ConfigurationManager.get<string[]>(ConfigurationManager.Section.customApplications);
+        const view = ConfigurationManager.get<View>(ConfigurationManager.Section.view);
+        const sort = ConfigurationManager.get<Sort>(ConfigurationManager.Section.sort);
+        commands.executeCommand('setContext', 'QuickLaunch.view.favorite', view.Favorites);
+        commands.executeCommand('setContext', 'QuickLaunch.view.customs', view.Customs);
+        commands.executeCommand('setContext', 'QuickLaunch.view.other', view.Other);
+        commands.executeCommand('setContext', 'QuickLaunch.sort.priority', sort.Priority);
+        commands.executeCommand('setContext', 'QuickLaunch.sort.alphabetically', sort.Alphabetically);
+
         const favoriteApplications = ConfigurationManager.get<string[]>(ConfigurationManager.Section.favoriteApplications);
-        const matches = await glob(patterns);
-        return customApplications.concat(matches)
+        const customApplications = ConfigurationManager.get<string[]>(ConfigurationManager.Section.customApplications);
+        const applications = await glob(patterns);
+
+        const filteredApplications: string[] = [];
+        if (view.Customs) {
+            filteredApplications.push(...customApplications);
+        } else if (view.Favorites) {
+            filteredApplications.push(...customApplications.filter(customApplication => favoriteApplications.includes(path.parse(customApplication).name)));
+        }
+        if (view.Other) {
+            filteredApplications.push(...applications);
+        } else if (view.Favorites) {
+            filteredApplications.push(...applications.filter(application => favoriteApplications.includes(path.parse(application).name)));
+        }
+
+        return filteredApplications
             .map(match => {
                 return {
                     name: path.parse(match).name,
                     path: match.replace(/\\/g, '/'),
-                    favorite: favoriteApplications && favoriteApplications.length > 0 ? favoriteApplications.includes(path.parse(match).name) : false,
-                    custom: customApplications && customApplications.length > 0 ? customApplications.includes(match) : false
+                    favorite: view.Favorites && favoriteApplications && favoriteApplications.length > 0 ?
+                        favoriteApplications.includes(path.parse(match).name) : false,
+                    custom: view.Customs && customApplications && customApplications.length > 0 ?
+                        customApplications.includes(match) : false
                 }
             })
             .filter((match, index, self) =>
                 index === self.findIndex(t => t.name === match.name)
             )
             .sort((a, b) => {
-                // Sort by favorite first
-                if (a.favorite !== b.favorite) {
-                    return a.favorite ? -1 : 1;
+                if (sort.Priority) {
+                    if (a.favorite !== b.favorite) {
+                        return a.favorite ? -1 : 1;
+                    }
+
+                    if (a.custom !== b.custom) {
+                        return a.custom ? -1 : 1;
+                    }
                 }
 
-                // Sort by custom second
-                if (a.custom !== b.custom) {
-                    return a.custom ? -1 : 1;
+                if (sort.Alphabetically) {
+                    return a.name.localeCompare(b.name);
+                } else {
+                    return a.path.localeCompare(b.path);
                 }
-
-                // Sort alphabetically by name
-                return a.name.localeCompare(b.name);
             });
     }
 
@@ -140,7 +166,18 @@ export class ApplicationManager {
         }
 
         await ConfigurationManager.set(ConfigurationManager.Section.applicationExtensions, applicationExtensions);
-        return true
+        return true;
+    }
 
+    static async toggleView(key: keyof View): Promise<void> {
+        const view = ConfigurationManager.get<View>(ConfigurationManager.Section.view);
+        view[key] = !view[key];
+        await ConfigurationManager.set(ConfigurationManager.Section.view, view);
+    }
+
+    static async toggleSort(key: keyof Sort): Promise<void> {
+        const sort = ConfigurationManager.get<Sort>(ConfigurationManager.Section.sort);
+        sort[key] = !sort[key];
+        await ConfigurationManager.set(ConfigurationManager.Section.sort, sort);
     }
 }

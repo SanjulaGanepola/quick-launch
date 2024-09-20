@@ -19,7 +19,8 @@ export default class ApplicationTreeItem extends TreeItem implements Application
         this.contextValue = `${ApplicationTreeItem.contextValue}` +
             (application.favorite ? '_favorite' : '_unfavorite') +
             (application.custom ? '_custom' : '_builtin');
-            this.iconPath = new ThemeIcon('rocket', application.favorite ? new ThemeColor('QuickLaunch.favoriteApplication') : (application.custom ? new ThemeColor('QuickLaunch.customApplication') : undefined));
+        this.iconPath = new ThemeIcon('rocket', application.favorite && application.custom ? new ThemeColor('QuickLaunch.favoriteCustomApplication') :
+            (application.favorite ? new ThemeColor('QuickLaunch.favoriteApplication') : (application.custom ? new ThemeColor('QuickLaunch.customApplication') : undefined)));
         this.resourceUri = Uri.parse(`${ApplicationTreeItem.contextValue}:${application.path}?favorite=${application.favorite}&custom=${application.custom}`, true);
     }
 

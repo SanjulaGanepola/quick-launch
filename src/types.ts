@@ -16,3 +16,14 @@ export interface PlatformApplicationManager {
     extensions: string[];
     directories: string[];
 }
+
+export interface View {
+    Favorites: boolean,
+    Customs: boolean,
+    Other: boolean
+}
+
+export interface Sort {
+    Priority: boolean,
+    Alphabetically: boolean
+}
