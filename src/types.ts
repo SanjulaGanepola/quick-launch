@@ -8,7 +8,8 @@ export interface Application {
     name: string,
     path: string,
     favorite: boolean,
-    custom: boolean
+    custom: boolean,
+    keyboardShortcut?: string
 }
 
 export interface PlatformApplicationManager {
@@ -26,4 +27,16 @@ export interface View {
 export interface Sort {
     Priority: boolean,
     Alphabetically: boolean
+}
+
+export interface KeyboardShortcut {
+    command: string,
+    key: string,
+    when?: string,
+    args?: any
+}
+
+export interface KeyboardShortcutArgument {
+    name: string,
+    path: string
 }

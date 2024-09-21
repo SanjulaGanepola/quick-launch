@@ -2,6 +2,8 @@ import { CancellationToken, commands, env, EventEmitter, ExtensionContext, Theme
 import { ApplicationManager } from "../applicationManager/applicationManager";
 import { ConfigurationManager } from "../configurationManager";
 import { DecorationProvider } from "../decorationProvider";
+import { KeyboardShortcutsManager } from "../keyboardShortcutsManager";
+import { KeyboardShortcut, KeyboardShortcutArgument } from "../types";
 import ApplicationTreeItem from "./application";
 import { ApplicationsTreeItem } from "./applicationsTreeItem";
 
@@ -11,6 +13,10 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
     public static VIEW_ID = 'applications';
 
     constructor(context: ExtensionContext) {
+        try {
+            KeyboardShortcutsManager.initializeFileWatcher(this);
+        } catch (error) { }
+
         workspace.onDidChangeConfiguration(async event => {
             if (event.affectsConfiguration(ConfigurationManager.group)) {
                 ConfigurationManager.initialize();
@@ -21,6 +27,9 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
         const decorationProvider = new DecorationProvider();
         context.subscriptions.push(
             window.registerFileDecorationProvider(decorationProvider),
+            commands.registerCommand('quickLaunch.launchSingleApplication', async (args: KeyboardShortcutArgument) => {
+                await env.openExternal(Uri.parse(args.path));
+            }),
             commands.registerCommand('quickLaunch.launchApplication', async () => {
                 const applications = await ApplicationManager.getApplications();
                 if (applications.length > 0) {
@@ -129,7 +138,10 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
             commands.registerCommand('quickLaunch.alphabeticallyDisable', async () => {
                 ApplicationManager.toggleSort('Alphabetically');
             }),
-            commands.registerCommand('quickLaunch.settings', async () => {
+            commands.registerCommand('quickLaunch.keyboardShortcuts', async () => {
+                await commands.executeCommand('workbench.action.openGlobalKeybindingsFile');
+            }),
+            commands.registerCommand('quickLaunch.extensionSettings', async () => {
                 await commands.executeCommand('workbench.action.openSettings', '@ext:SanjulaGanepola.quick-launch');
             }),
             commands.registerCommand('quickLaunch.refresh', async () => {
@@ -147,7 +159,28 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
                 this.refresh();
             }),
             commands.registerCommand('quickLaunch.assignKeyboardShortcut', async (applicationTreeItem: ApplicationTreeItem) => {
-                // TODO:
+                let keyboardShortcuts: KeyboardShortcut[] = [];
+                try {
+                    keyboardShortcuts = await KeyboardShortcutsManager.getKeyboardShortcuts();
+                } catch (error) {
+                    KeyboardShortcutsManager.showErrorNotification(error, 'Failed to load VS Code keybindings.json file.');
+                    return;
+                }
+
+                const existingKeyboardShortcut = keyboardShortcuts.find(keyboardShortcut => keyboardShortcut.args?.name === applicationTreeItem.application.name && keyboardShortcut.args?.path === applicationTreeItem.application.path)?.key;
+                const newKeyboardShortcut = await window.showInputBox({
+                    prompt: `Enter a keyboard shortcut for ${applicationTreeItem.application.name} as a key or key sequence (separate keys with plus-sign and sequences with space, e.g. Ctrl+O and Ctrl+L L for a chord)`,
+                    placeHolder: 'Keyboard Shortcut',
+                    value: existingKeyboardShortcut
+                });
+
+                if (newKeyboardShortcut !== undefined) {
+                    try {
+                        await KeyboardShortcutsManager.setKeyboardShortcut(newKeyboardShortcut, { name: applicationTreeItem.application.name, path: applicationTreeItem.application.path });
+                    } catch (error) {
+                        KeyboardShortcutsManager.showErrorNotification(error, 'Failed to write to VS Code keybindings.json file.')
+                    }
+                }
             }),
             commands.registerCommand('quickLaunch.revealInFileExplorer', async (applicationTreeItem: ApplicationTreeItem) => {
                 commands.executeCommand('revealFileInOS', Uri.file(applicationTreeItem.application.path));
@@ -176,11 +209,7 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
             return element.getChildren();
         } else {
             const applications = await ApplicationManager.getApplications();
-            if (applications.length > 0) {
-                return applications.map(application => new ApplicationTreeItem(application));
-            } else {
-                return [];
-            }
+            return applications.map(application => new ApplicationTreeItem(application));
         }
     }
 }

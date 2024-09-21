@@ -9,6 +9,7 @@ export default class ApplicationTreeItem extends TreeItem implements Application
     constructor(application: Application) {
         super(application.name, TreeItemCollapsibleState.Collapsed);
         this.application = application;
+        this.description = application.keyboardShortcut ? `(${application.keyboardShortcut})` : undefined;
         this.collapsibleState = TreeItemCollapsibleState.None;
         this.tooltip = `Name: ${application.name}\nPath: ${application.path}`;
         this.command = {

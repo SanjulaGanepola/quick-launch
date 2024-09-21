@@ -63,6 +63,11 @@
       },
       {
         "category": "Quick Launch",
+        "command": "quickLaunch.launchSingleApplication",
+        "title": "Launch Single Application"
+      },
+      {
+        "category": "Quick Launch",
         "command": "quickLaunch.addCustomApplications",
         "title": "Custom Applications"
       },
@@ -134,8 +139,13 @@
       },
       {
         "category": "Quick Launch",
-        "command": "quickLaunch.settings",
-        "title": "Settings"
+        "command": "quickLaunch.keyboardShortcuts",
+        "title": "Keyboard Shortcuts"
+      },
+      {
+        "category": "Quick Launch",
+        "command": "quickLaunch.extensionSettings",
+        "title": "Extension Settings"
       },
       {
         "category": "Quick Launch",
@@ -196,6 +206,10 @@
     "menus": {
       "commandPalette": [
         {
+          "command": "quickLaunch.launchSingleApplication",
+          "when": "never"
+        },
+        {
           "command": "quickLaunch.addCustomApplications",
           "when": "never"
         },
@@ -252,7 +266,11 @@
           "when": "never"
         },
         {
-          "command": "quickLaunch.settings",
+          "command": "quickLaunch.keyboardShortcuts",
+          "when": "never"
+        },
+        {
+          "command": "quickLaunch.extensionSettings",
           "when": "never"
         },
         {
@@ -331,9 +349,14 @@
           "group": "0_listControl@1"
         },
         {
-          "command": "quickLaunch.settings",
+          "command": "quickLaunch.keyboardShortcuts",
           "when": "view == applications",
           "group": "1_settings@0"
+        },
+        {
+          "command": "quickLaunch.extensionSettings",
+          "when": "view == applications",
+          "group": "1_settings@1"
         }
       ],
       "quickLaunch.viewApplications": [
@@ -537,6 +560,7 @@
     "test": "vscode-test"
   },
   "dependencies": {
+    "comment-json": "^4.2.5",
     "glob": "^11.0.0",
     "windows-shortcuts": "^0.1.6"
   },

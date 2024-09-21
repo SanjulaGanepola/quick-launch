@@ -2,7 +2,8 @@ import { glob } from "glob";
 import * as path from "path";
 import { commands, Uri } from "vscode";
 import { ConfigurationManager } from "../configurationManager";
-import { Application, Platform, PlatformApplicationManager, Sort, View } from "../types";
+import { KeyboardShortcutsManager } from "../keyboardShortcutsManager";
+import { Application, KeyboardShortcut, Platform, PlatformApplicationManager, Sort, View } from "../types";
 import { Linux } from "./linux";
 import { Mac } from "./mac";
 import { Windows } from "./windows";
@@ -61,15 +62,24 @@ export class ApplicationManager {
             filteredApplications.push(...applications.filter(application => favoriteApplications.includes(path.parse(application).name)));
         }
 
+        let keyboardShortcuts: KeyboardShortcut[] = [];
+        try {
+            keyboardShortcuts = await KeyboardShortcutsManager.getKeyboardShortcuts();
+        } catch (error) { }
+
         return filteredApplications
             .map(match => {
+                const name = path.parse(match).name;
+                const matchPath = match.replace(/\\/g, '/');
                 return {
-                    name: path.parse(match).name,
-                    path: match.replace(/\\/g, '/'),
+                    name: name,
+                    path: matchPath,
                     favorite: view.Favorites && favoriteApplications && favoriteApplications.length > 0 ?
-                        favoriteApplications.includes(path.parse(match).name) : false,
+                        favoriteApplications.includes(name) : false,
                     custom: view.Customs && customApplications && customApplications.length > 0 ?
-                        customApplications.includes(match) : false
+                        customApplications.includes(match) : false,
+                    keyboardShortcut: keyboardShortcuts ?
+                        keyboardShortcuts.find(keyboardShortcut => keyboardShortcut.args?.name === name && keyboardShortcut.args?.path === matchPath)?.key : undefined
                 }
             })
             .filter((match, index, self) =>
