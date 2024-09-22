@@ -64,7 +64,11 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
                 if (customApplications && customApplications.length > 0) {
                     const existingApplicationNames = await ApplicationManager.addCustomApplications(customApplications);
                     if (existingApplicationNames.length > 0) {
-                        window.showErrorMessage(`The following are already added as custom applications: ${existingApplicationNames.join(', ')}`);
+                        window.showErrorMessage(`The following are already added as custom applications: ${existingApplicationNames.join(', ')}`, 'View Custom Applications').then(async (value) => {
+                            if (value === 'View Custom Applications') {
+                                await commands.executeCommand('workbench.action.openSettings', '@ext:SanjulaGanepola.quick-launch QuickLaunch.customApplications');
+                            }
+                        });
                     }
                 }
             }),
@@ -79,7 +83,11 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
                 if (applicationDirectories && applicationDirectories.length > 0) {
                     const existingApplicationDirectories = await ApplicationManager.addApplicationDirectories(applicationDirectories);
                     if (existingApplicationDirectories.length > 0) {
-                        window.showErrorMessage(`The following are already added as application directories: ${existingApplicationDirectories.join(', ')}`);
+                        window.showErrorMessage(`The following are already added as application directories: ${existingApplicationDirectories.join(', ')}`, 'View Application Directories').then(async (value) => {
+                            if (value === 'View Application Directories') {
+                                await commands.executeCommand('workbench.action.openSettings', '@ext:SanjulaGanepola.quick-launch QuickLaunch.applicationDirectories');
+                            }
+                        });
                     }
                 }
             }),
@@ -99,9 +107,14 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
                 });
 
                 if (applicationExtension) {
-                    const isSuccess = await ApplicationManager.addApplicationExtensions(applicationExtension);
-                    if (!isSuccess) {
-                        window.showErrorMessage(`${applicationExtension} is already added as an application extension`);
+                    try {
+                        await ApplicationManager.addApplicationExtensions(applicationExtension);
+                    } catch (error) {
+                        window.showErrorMessage(error instanceof Error ? error.message : `${applicationExtension} is already added as an application extension`, 'View Application Extensions').then(async (value) => {
+                            if (value === 'View Application Extensions') {
+                                await commands.executeCommand('workbench.action.openSettings', '@ext:SanjulaGanepola.quick-launch QuickLaunch.applicationExtensions');
+                            }
+                        });
                     }
                 }
             }),
@@ -152,11 +165,9 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
             }),
             commands.registerCommand('quickLaunch.favorite', async (applicationTreeItem: ApplicationTreeItem) => {
                 await ApplicationManager.toggleFavoriteApplication(applicationTreeItem.application);
-                this.refresh();
             }),
             commands.registerCommand('quickLaunch.unfavorite', async (applicationTreeItem: ApplicationTreeItem) => {
                 await ApplicationManager.toggleFavoriteApplication(applicationTreeItem.application);
-                this.refresh();
             }),
             commands.registerCommand('quickLaunch.assignKeyboardShortcut', async (applicationTreeItem: ApplicationTreeItem) => {
                 let keyboardShortcuts: KeyboardShortcut[] = [];
@@ -184,6 +195,17 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
             }),
             commands.registerCommand('quickLaunch.revealInFileExplorer', async (applicationTreeItem: ApplicationTreeItem) => {
                 commands.executeCommand('revealFileInOS', Uri.file(applicationTreeItem.application.path));
+            }),
+            commands.registerCommand('quickLaunch.removeCustomApplication', async (applicationTreeItem: ApplicationTreeItem) => {
+                try {
+                    ApplicationManager.removeCustomApplication(applicationTreeItem.application);
+                } catch (error) {
+                    window.showErrorMessage(error instanceof Error ? error.message : `Failed to find ${applicationTreeItem.application.name} in custom application list`, 'View Custom Applications').then(async (value) => {
+                        if (value === 'View Custom Applications') {
+                            await commands.executeCommand('workbench.action.openSettings', '@ext:SanjulaGanepola.quick-launch QuickLaunch.customApplications');
+                        }
+                    });
+                }
             })
         );
     }

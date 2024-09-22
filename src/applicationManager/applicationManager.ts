@@ -106,6 +106,7 @@ export class ApplicationManager {
 
     static async toggleFavoriteApplication(application: Application) {
         let favoriteApplications = ConfigurationManager.get<string[]>(ConfigurationManager.Section.favoriteApplications);
+
         if (favoriteApplications && favoriteApplications.length > 0) {
             if (favoriteApplications.includes(application.name)) {
                 favoriteApplications = favoriteApplications.filter((favoriteApplication) => {
@@ -123,6 +124,7 @@ export class ApplicationManager {
 
     static async addCustomApplications(applicationUris: Uri[]): Promise<string[]> {
         let customApplications = ConfigurationManager.get<string[]>(ConfigurationManager.Section.customApplications);
+
         if (!customApplications) {
             customApplications = [];
         }
@@ -140,6 +142,22 @@ export class ApplicationManager {
 
         await ConfigurationManager.set(ConfigurationManager.Section.customApplications, customApplications);
         return existingApplicationNames;
+    }
+
+    static async removeCustomApplication(application: Application): Promise<void> {
+        const customApplications = ConfigurationManager.get<string[]>(ConfigurationManager.Section.customApplications);
+        if (!customApplications) {
+            throw new Error(`No custom applications to remove`);
+        }
+
+        const applicationIndex = customApplications.findIndex(customApplication => customApplication === application.path);
+        if (applicationIndex > -1) {
+            customApplications.splice(applicationIndex, 1);
+        } else {
+            throw new Error(`Failed to find ${application.name} in custom application list`);
+        }
+
+        await ConfigurationManager.set(ConfigurationManager.Section.customApplications, customApplications);
     }
 
     static async addApplicationDirectories(directoryUris: Uri[]): Promise<string[]> {
@@ -163,7 +181,7 @@ export class ApplicationManager {
         return existingApplicationDirectories;
     }
 
-    static async addApplicationExtensions(applicationExtension: string): Promise<boolean> {
+    static async addApplicationExtensions(applicationExtension: string): Promise<void> {
         let applicationExtensions = ConfigurationManager.get<string[]>(ConfigurationManager.Section.applicationExtensions);
         if (!applicationExtensions) {
             applicationExtensions = [];
@@ -172,11 +190,10 @@ export class ApplicationManager {
         if (!applicationExtensions.includes(applicationExtension)) {
             applicationExtensions.push(applicationExtension);
         } else {
-            return false;
+            throw new Error(`${applicationExtension} is already added as an application extension`);
         }
 
         await ConfigurationManager.set(ConfigurationManager.Section.applicationExtensions, applicationExtensions);
-        return true;
     }
 
     static async toggleView(key: keyof View): Promise<void> {

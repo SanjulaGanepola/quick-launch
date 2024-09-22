@@ -14,11 +14,11 @@ export class KeyboardShortcutsManager {
                 }
             case Platform.mac:
                 if (process.env.HOME) {
-                    return path.join(process.env.HOME, 'Library', 'Application Support', 'Code', 'User', 'keybindings.json');
+                    return path.join(process.env.HOME, 'Library', 'Application Support', 'Code', 'User', 'keybindings.json').replace(/\\/g, '/');
                 }
             case Platform.linux:
                 if (process.env.HOME) {
-                    return path.join(process.env.HOME, '.config', 'Code', 'User', 'keybindings.json');
+                    return path.join(process.env.HOME, '.config', 'Code', 'User', 'keybindings.json').replace(/\\/g, '/');
                 }
             default:
                 throw new Error('Failed to locate VS Code keybindings.json file');
@@ -55,7 +55,7 @@ export class KeyboardShortcutsManager {
         const keyboardShortcuts = await KeyboardShortcutsManager.getKeyboardShortcuts();
 
         const existingKeyboardShortcutIndex = keyboardShortcuts.findIndex(keyboardShortcut => keyboardShortcut.args?.name === args.name && keyboardShortcut.args?.path === args.path);
-        if (existingKeyboardShortcutIndex !== -1) {
+        if (existingKeyboardShortcutIndex > -1) {
             if (keyboardShortcut === '') {
                 keyboardShortcuts.splice(existingKeyboardShortcutIndex, 1);
             } else {

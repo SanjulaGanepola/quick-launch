@@ -181,6 +181,11 @@
         "category": "Quick Launch",
         "command": "quickLaunch.revealInFileExplorer",
         "title": "Reveal in File Explorer"
+      },
+      {
+        "category": "Quick Launch",
+        "command": "quickLaunch.removeCustomApplication",
+        "title": "Remove Custom Application"
       }
     ],
     "submenus": [
@@ -295,6 +300,10 @@
         },
         {
           "command": "quickLaunch.revealInFileExplorer",
+          "when": "never"
+        },
+        {
+          "command": "quickLaunch.removeCustomApplication",
           "when": "never"
         }
       ],
@@ -438,6 +447,11 @@
           "command": "quickLaunch.revealInFileExplorer",
           "when": "view == applications && viewItem =~ /^application.*/",
           "group": "0_reveal@0"
+        },
+        {
+          "command": "quickLaunch.removeCustomApplication",
+          "when": "view == applications && viewItem =~ /^application.*_custom.*/",
+          "group": "1_edit@1"
         }
       ]
     },
@@ -446,7 +460,7 @@
       "properties": {
         "QuickLaunch.applicationDirectories": {
           "type": "array",
-          "description": "The directories to search for applications.",
+          "markdownDescription": "The directories to search for applications. Refer to the default directories based on OS:\n\n* **Windows**: `C:/ProgramData/Microsoft/Windows/Start Menu/Programs`, `C:/Users/<User>/AppData/Roaming/Microsoft/Windows/Start Menu/Programs`, `C:/Users/<User>/OneDrive/Desktop` (*if OneDrive is enabled*), `C:/Users/<User>/Desktop`\n\n* **MacOS**: `/Applications`, `/System/Applications`, `/System/Library/PreferencePanes`, `~/Applications`\n\n* **Linux**: `/usr/share/applications`, `/usr/share/ubuntu/applications`, `/usr/share/gnome/applications`, `/usr/local/share/applications`, `/usr/local/applications`, `~/.local/share/applications`",
           "default": [],
           "items": {
             "type": "string"
@@ -454,7 +468,7 @@
         },
         "QuickLaunch.applicationExtensions": {
           "type": "array",
-          "description": "The possible file extensions for applications.",
+          "markdownDescription": "The possible file extensions for applications. Refer to the default extensions based on OS:\n\n* **Windows**: `exe`, `lnk`\n\n* **MacOS**: `app`, `prefPane`\n\n* **Linux**: `desktop`",
           "default": [],
           "items": {
             "type": "string"
@@ -476,6 +490,25 @@
             "type": "string"
           }
         },
+        "QuickLaunch.sort": {
+          "type": "object",
+          "markdownDescription": "Controls what order the applications are sorted in.\n\n* `Priority`: Applications are sorted based on priority. Favorite applications are rendered first followed by custom applications and lastly the other applications. Applications which are both favorites and custom will take the highest position in the list.\n\n* `Alphabetically`: Applications are sorted alphabetically by name.",
+          "default": {
+            "Priority": true,
+            "Alphabetically": true
+          },
+          "properties": {
+            "Priority": {
+              "type": "boolean",
+              "default": true
+            },
+            "Alphabetically": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          "additionalProperties": false
+        },
         "QuickLaunch.view": {
           "type": "object",
           "markdownDescription": "Controls which applications are displayed.\n\n* `Favorites`: Display favorite applications.\n\n* `Customs`: Display custom applications.\n\n* `Other`: Display other applications.",
@@ -494,25 +527,6 @@
               "default": true
             },
             "Other": {
-              "type": "boolean",
-              "default": true
-            }
-          },
-          "additionalProperties": false
-        },
-        "QuickLaunch.sort": {
-          "type": "object",
-          "markdownDescription": "Controls what order the applications are sorted in.\n\n* `Priority`: Applications are sorted based on priority. Favorite applications are rendered first followed by custom applications and lastly the other applications. Applications which are both favorites and custom will take the highest position in the list.\n\n* `Alphabetically`: Applications are sorted alphabetically by name.",
-          "default": {
-            "Priority": true,
-            "Alphabetically": true
-          },
-          "properties": {
-            "Priority": {
-              "type": "boolean",
-              "default": true
-            },
-            "Alphabetically": {
               "type": "boolean",
               "default": true
             }

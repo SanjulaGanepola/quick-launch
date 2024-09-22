@@ -9,8 +9,8 @@ export namespace ConfigurationManager {
         applicationExtensions = "applicationExtensions",
         customApplications = "customApplications",
         favoriteApplications = "favoriteApplications",
-        view = "view",
-        sort = "sort"
+        sort = "sort",
+        view = "view"
     }
 
     export function initialize(): void {
