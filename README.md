@@ -21,8 +21,8 @@ Quickly launch any Windows, MacOS, or Linux application right from VS Code! Assi
     * Click `Launch` on an application.
     * Click `Search for Applications` to browse.
     * Use `Launch Application` from the command palette to also browse.
-2. To add custom applications, click `Add...` > `Custom Applications`. These will be denoted in <span style="color:#89d185">green</span>.
-3. To assign favorites, click `Favorite` on an application. These will be denoted in <span style="color:#cca700">yellow</span> or even <span style="color:#4CB1FF">blue</span> if they are also custom applications.
+2. To add custom applications, click `Add...` > `Custom Applications`. These will be denoted in <span style="color:#89d185">green</span> with a ⚙️ badge.
+3. To assign favorites, click `Favorite` on an application. These will be denoted in <span style="color:#cca700">yellow</span> with a ⭐ badge or even <span style="color:#4CB1FF">blue</span> with a 🚀 badge if they are also custom applications.
 4. To assign keyboard shortcuts, click `Assign Keyboard Shortcut` on an application.
 5. To configure application directories or extensions click `Add...` > `Application Directories` or `Application Extensions`.
 
