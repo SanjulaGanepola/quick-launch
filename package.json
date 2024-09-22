@@ -88,7 +88,7 @@
       {
         "category": "Quick Launch",
         "command": "quickLaunch.searchForApplication",
-        "title": "Search For Application",
+        "title": "Search for Application",
         "icon": "$(search)"
       },
       {
