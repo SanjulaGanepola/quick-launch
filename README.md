@@ -13,7 +13,7 @@ Quickly launch any Windows, MacOS, or Linux application right from VS Code! Assi
 * ⌨️ **Assign Keyboard Shortcuts**: Assign keyboard shortcuts to individual applications to quickly launch them.
 * ✏️ **Configure Application Directories & Extensions**: Configure the directories and extensions that will be used to searched for applications.
 
-<img src="./images/quick-launch.gif">
+![Quick Launch](./images/quick-launch.gif)
 
 ## Getting Started
 
@@ -26,7 +26,7 @@ Quickly launch any Windows, MacOS, or Linux application right from VS Code! Assi
 4. To assign keyboard shortcuts, click `Assign Keyboard Shortcut` on an application.
 5. To configure application directories or extensions click `Add...` > `Application Directories` or `Application Extensions`.
 
-<img src="./images/getting-started.png">
+![Getting Started](./images/getting-started.png)
 
 ## Extension Settings
 
