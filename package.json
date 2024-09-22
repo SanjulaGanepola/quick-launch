@@ -541,7 +541,7 @@
         "description": "Color for a favorite application",
         "defaults": {
           "dark": "#cca700",
-          "light": "#cca700"
+          "light": "#BF8803"
         }
       },
       {
@@ -549,7 +549,7 @@
         "description": "Color for a custom application",
         "defaults": {
           "dark": "#89d185",
-          "light": "#89d185"
+          "light": "#388A34"
         }
       },
       {
@@ -557,7 +557,7 @@
         "description": "Color for a favorite custom application",
         "defaults": {
           "dark": "#4CB1FF",
-          "light": "#4CB1FF"
+          "light": "#007ACC"
         }
       }
     ]
