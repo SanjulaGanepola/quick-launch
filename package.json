@@ -149,6 +149,11 @@
       },
       {
         "category": "Quick Launch",
+        "command": "quickLaunch.helpAndSupport",
+        "title": "Help and Support"
+      },
+      {
+        "category": "Quick Launch",
         "command": "quickLaunch.refresh",
         "title": "Refresh",
         "icon": "$(refresh)"
@@ -279,6 +284,10 @@
           "when": "never"
         },
         {
+          "command": "quickLaunch.helpAndSupport",
+          "when": "never"
+        },
+        {
           "command": "quickLaunch.refresh",
           "when": "never"
         },
@@ -366,6 +375,11 @@
           "command": "quickLaunch.extensionSettings",
           "when": "view == applications",
           "group": "1_settings@1"
+        },
+        {
+          "command": "quickLaunch.helpAndSupport",
+          "when": "view == applications",
+          "group": "2_help@0"
         }
       ],
       "quickLaunch.viewApplications": [

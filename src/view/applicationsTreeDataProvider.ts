@@ -157,6 +157,9 @@ export default class ApplicationsTreeDataProvider implements TreeDataProvider<Ap
             commands.registerCommand('quickLaunch.extensionSettings', async () => {
                 await commands.executeCommand('workbench.action.openSettings', '@ext:SanjulaGanepola.quick-launch');
             }),
+            commands.registerCommand('quickLaunch.helpAndSupport', async () => {
+                await env.openExternal(Uri.parse('https://github.com/SanjulaGanepola/quick-launch/issues'));
+            }),
             commands.registerCommand('quickLaunch.refresh', async () => {
                 this.refresh();
             }),
