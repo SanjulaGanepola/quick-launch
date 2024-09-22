@@ -1,7 +1,7 @@
 {
   "name": "quick-launch",
   "displayName": "Quick Launch",
-  "description": "Quickly launch any Windows, MacOS, or Linux application right from VS Code.",
+  "description": "Quickly launch and assign shortcuts to any application right from VS Code",
   "icon": "icon.png",
   "author": {
     "name": "Sanjula Ganepola",
@@ -9,7 +9,7 @@
   },
   "publisher": "SanjulaGanepola",
   "license": "Apache-2.0",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "repository": {
     "url": "https://github.com/SanjulaGanepola/quick-launch"
   },
@@ -18,12 +18,16 @@
     "url": "https://github.com/SanjulaGanepola/quick-launch/issues"
   },
   "keywords": [
-    "Application Launcher"
+    "Application Launcher",
+    "Windows",
+    "MacOS",
+    "Linux"
   ],
   "engines": {
     "vscode": "^1.93.0"
   },
   "categories": [
+    "Keymaps",
     "Other"
   ],
   "activationEvents": [

@@ -5,7 +5,7 @@
 [![Version](https://img.shields.io/visual-studio-marketplace/v/SanjulaGanepola.quick-launch)](https://marketplace.visualstudio.com/items?itemName=SanjulaGanepola.quick-launch)
 [![Installs](https://img.shields.io/visual-studio-marketplace/i/SanjulaGanepola.quick-launch)](https://marketplace.visualstudio.com/items?itemName=SanjulaGanepola.quick-launch)
 
-Quickly launch any application right from VS Code! Assign favorites and keyboard shortcuts to access your most commonly used applications with ease.
+Quickly launch any Windows, MacOS, or Linux application right from VS Code! Assign favorites and keyboard shortcuts to access your most commonly used applications with ease.
 
 * 🚀 **Launch Applications**: Launch any application on your machine from VS Code.
 * ⚙️ **Add Custom Applications**: Add individual custom applications that are not found in the application directories.
