@@ -11,7 +11,7 @@ Quickly launch any Windows, MacOS, or Linux application right from VS Code! Assi
 * ⚙️ **Add Custom Applications**: Add individual custom applications that are not found in the application directories.
 * 🌟 **Assign Favorites**: Assign favorites to easily find your most commonly used applications.
 * ⌨️ **Assign Keyboard Shortcuts**: Assign keyboard shortcuts to individual applications to quickly launch them.
-* ✏️ **Configure Application Directories & Extensions**: Configure the directories and extensions that will be used to searched for applications.
+* ✏️ **Configure Application Directories & Extensions**: Configure the directories and extensions that will be used to search for applications.
 
 ![Quick Launch](./images/quick-launch.gif)
 
